@@ -271,7 +271,8 @@ module.exports = {
                       locate(pharmacy, origin, function(data){
                         
                         if(data){
-                          pharmacyArray.push(data);
+                          var obj = {name:data.pharmacy.name, email:data.pharmacy.email, location:data.pharmacy.location, phone:data.pharmacy.phone, latitude:data.pharmacy.latitude, longitude:data.pharmacy.longitude, date:data.pharmacy.created, id:data.pharmacy.id, distance:data.distance};
+                          pharmacyArray.push(obj);
                           callback();
                         }
                       });
