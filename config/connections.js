@@ -65,6 +65,16 @@ module.exports.connections = {
     database: 'pharmakeia' //optional
   },
 
+
+  remoteMongodbServer: {
+     adapter: 'sails-mongo',
+     host: 'ds151909.mlab.com:',
+     port: 51909,
+     user: 'db_admin', //optional
+     password: 'qazplm741', //optional
+     database: 'pharmakeia' //optional
+   },
+
   /***************************************************************************
   *                                                                          *
   * PostgreSQL is another officially supported relational database.          *

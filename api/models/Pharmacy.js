@@ -58,6 +58,16 @@ module.exports = {
       required:true
     },
 
+    opening_hours:{
+      type:"string",
+      required:true
+    },
+
+    closing_hours:{
+      type:"string",
+      required:true
+    }
+
     city:{
       type:"string",
       required:true
