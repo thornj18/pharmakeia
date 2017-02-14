@@ -281,7 +281,7 @@ module.exports = {
                       if(err){
                         console.log(err);
                       }else{
-                        obj.sort(compare);
+                        pharmacyArray.sort(compare);
                         res.send(pharmacyArray);
                       }
                     });
