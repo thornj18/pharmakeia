@@ -1,0 +1,31 @@
+<div class="titlebox pad" >
+  <div class="row">
+    <div class="col-md-8">
+      <h1>PHARMACIES MANAGEMENT</h1>
+    </div>
+      <div class="col-md-4">
+        <button class="flat pull-right" ng-click=menu("newpharmacy")>CREATE NEW</button>
+      </div>
+  </div>
+</div>
+<div class="table pad">
+  <table class="table table-striped">
+  <thead>
+  <tr>
+  <th class="text-left">Email </th>
+  <th class="text-left">Pharmacy Name</th>
+  <th class="text-left">Pharmacy Location</th>
+  <th class="text-left">phone</th>
+  </tr>
+  </thead>
+  <tbody class="table-hover"  ng-Controller="PharmacyCtrl">
+  <tr ng-repeat="pharmacy in pharmacies">
+  <td class="text-left">{{pharmacy.email}}</td>
+  <td class="text-left">{{pharmacy.name}}</td>
+  <td class="text-left">{{pharmacy.location}}</td>
+  <td class="text-left">{{pharmacy.phone}}</td> 
+   </tr>
+  </tbody>
+  </table>
+  
+</div>

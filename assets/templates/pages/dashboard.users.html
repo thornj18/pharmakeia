@@ -1,0 +1,32 @@
+<div class="titlebox pad">
+  <div class="row">
+    <div class="col-md-8">
+      <h1>USER MANAGEMENT</h1>
+    </div>
+      <div class="col-md-4">
+        <button class="flat pull-right">CREATE NEW</button>
+      </div>
+  </div>
+</div>
+<div class="table pad">
+  <table class="table table-striped">
+    <thead>
+    <tr>
+      <th class="text-left">Date</th>
+      <th class="text-left">Name</th>
+      <th class="text-left">Phone Number</th>
+      <th class="text-left">location</th>
+      <th class="text-left">Edit</th>
+    </tr>
+    </thead>
+    <tbody class="table-hover"  ng-Controller="listusersCtrl">
+    <tr ng-repeat="user in listusers">
+      <td class="text-left">{{user.createdAt}}</td>
+      <td class="text-left">{{user.name}}</td>
+      <td class="text-left">{{user.phone}}</td>
+      <td class="text-left">{{user.role.name}}</td>
+      <td class="text-left"><i class="glyphicon glyphicon-pencil"></i></td>
+    </tr>
+    </tbody>
+  </table>
+</div>

@@ -1,0 +1,40 @@
+<div class="dashboard-page" ng-Controller="AppCtrl">
+  <div class="notify" ng-show="message">
+    {{message}}
+  </div>
+  <div class="container page" >
+    <div class="row row-eq-height">
+      <div class="col-md-3 side">
+        <div class="sidebar">
+          <div class="header pad la">
+            PHARMAKEIA ADMIN
+          </div>
+          <div class="navigation">
+            <ul class="nav nav-pills nav-stacked">
+              <li><a href="" ng-click=menu("overview")>Overview</a></li>
+              <li><a href="" ng-click=menu("users")>User Management</a></li>
+              <li><a href="" ng-click=menu("pharmacies")>Pharmacy Management</a></li>
+              <li><a href="" ng-click=menu("drugs")>Drugs Management</a>
+              <li><a href="" ng-click=menu("orders")>Orders</a></li>
+            </ul>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-9 cont">
+        <div class="header pad" ng-Controller="OnLoadCtrl">
+
+          <div class="welcome col-md-8">
+            <h3>Welcome, {{user.name}}</h3>
+          </div>
+          <div class="welcome col-md-4">
+            <button class="flat logout pull-right" ng-click=menu("logout")>LOGOUT</button>
+          </div>
+        </div>
+        <div class="ui-view content">
+        <!--pages here-->
+
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

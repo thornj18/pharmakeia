@@ -1,0 +1,35 @@
+<md-dialog aria-label="Send Payment">
+  <form>
+    <md-toolbar>
+      <div class="md-toolbar-tools">
+        <h2>Send Payment</h2>
+        <span flex></span>
+        <md-button class="md-icon-button" ng-click="cancel()">
+          <ng-md-icon aria-label="Send Payment" icon="close"></ng-md-icon>
+        </md-button>
+      </div>
+    </md-toolbar>
+    <md-dialog-content style="min-width:400px;min-height:150px; " layout-padding>
+      <div layout-padding>
+        <md-input-container class="md-block">
+          <label>Send to Mobile Number</label>
+          <input type="text" ng-model="mobile">
+        </md-input-container>
+
+        <md-input-container class="md-block">
+          <label>Amount</label>
+          <input type="number" ng-model="amount">
+        </md-input-container>
+
+      </md-dialog-content>
+      <md-dialog-actions layout="row" layout-padding>
+        <span flex></span>
+        <md-button ng-click="answer('User has cancelled the dialog')" >
+          CANCEL
+        </md-button>
+        <md-button ng-click="answer({mobile:mobile, amount:amount})" style="margin-right:20px;" >
+          SEND
+        </md-button>
+      </md-dialog-actions>
+    </form>
+  </md-dialog>

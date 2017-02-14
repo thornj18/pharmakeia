@@ -1,0 +1,44 @@
+<md-dialog aria-label="Send Payment">
+  <form>
+    <md-toolbar>
+      <div class="md-toolbar-tools">
+        <h2>Add New Wallet</h2>
+        <span flex></span>
+        <md-button class="md-icon-button" ng-click="cancel()">
+                    <ng-md-icon aria-label="Send Payment" icon="close"></ng-md-icon>
+        </md-button>
+      </div>
+    </md-toolbar>
+    <md-dialog-content style="min-width:400px;min-height:150px; " layout-padding>
+        <div layout-padding>
+            <md-input-container class="md-block">
+        <label>Phone Number</label>
+        <input ng-model="phone">
+      </md-input-container>
+
+            <md-input-container class="md-block">
+        <label>PIN</label>
+        <input ng-model="pin" >
+      </md-input-container>
+           <md-input-container class="md-block" flex-gt-sm>
+            <select flex ng-model="name">
+              <option>Select your wallet</option>
+                <option value="Tigo Pesa">Tigo Pesa</option>
+                <option value="M-PESA">M-PESA</option>
+                <option value="HaloPesa">HaloPesa</option>
+            </select>
+          </md-input-container>
+    </md-dialog-content>
+
+      <md-dialog-actions layout="row" layout-padding>
+
+      <span flex></span>
+      <md-button ng-click="answer('cancel')" >
+        CANCEL
+      </md-button>
+      <md-button ng-click="answer({phone:phone,name:name,pin:pin})" style="margin-right:20px;" >
+        ADD
+      </md-button>
+    </md-dialog-actions>
+    </form>
+</md-dialog>

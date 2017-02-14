@@ -1,0 +1,50 @@
+<div ng-controller="playGameCtrl">
+  <div class="titlebox pad">
+    <div class="row">
+      <div class="col-md-8">
+        <h1>{{game.game.name}}</h1>
+      </div>
+      <div class="col-md-4">
+        <h1>No. {{game.number}}</h1>
+      </div>
+    </div>
+  </div>
+  <div class="pad">
+    <div class="row">
+      <div class="retry" ng-show = "retry">
+        {{retry}}
+      </div>
+      <div class="success" ng-show = "leading">
+        {{leading}}
+      </div>
+
+
+    </div>
+  <div class="col-md-8">
+image
+  </div>
+    <div class="col-md-4">
+      <form>
+        <div class="createform">
+          <div class="row-fluid">
+            <div class="form-group col-md-12">
+              <input type="text" class="form-control" ng-model="number" placeholder="Play Number">
+            </div>
+          </div>
+          <div class="row-fluid">
+            <div class="form-group col-md-12">
+              <button class="flat btn-block" ng-click=play()>PLAY</button>
+            </div>
+          </div>
+
+
+
+        </div>
+    </div>
+    </form>
+    </div>
+
+</div>
+
+
+</div>
