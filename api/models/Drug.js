@@ -46,13 +46,14 @@ module.exports = {
     },
 
     prescription:{
-      type:"string"
+      type:"boolean"
     },
 
     owners:{
-      collection:"Pharmacy",
+      collection:"pharmacy",
       via:"drugs",
       required:true,
+      through:'drugpharmacy'
     }
 
 

@@ -19,6 +19,11 @@ module.exports = {
 
     drug:{
       model:"drug"
+    },
+
+    status:{
+      type:"string",
+      required:true
     }
 
   }

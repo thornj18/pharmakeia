@@ -12,10 +12,10 @@ App.service('pharmacyDataService', function($http, $q) {
     },
     'create': function(data) {
       var defer = $q.defer();
-      $http.post('/game/', data).success(function(resp){
+      $http.post('/pharmacy/create', data).then(function success(resp){
         defer.resolve(resp);
-      }).error( function(err) {
-        defer.resolve(err);
+      }, function error(resp) {
+        defer.resolve(resp);
       });
       return defer.promise;
     },

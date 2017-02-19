@@ -84,7 +84,7 @@ module.exports = {
     drugs:{
       collection:"drug",
       via:"owners",
-      dominant:true
+      through:'drugpharmacy'
     },
 
     orders:{

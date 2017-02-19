@@ -3,7 +3,7 @@ App.controller('UserCtrl', function ($scope, $log, $location, userDataService,$c
   $scope.register = function() {
     var formData = {name:$scope.name, email:$scope.email, password:$scope.password, phone:$scope.phone};
     userDataService.doRegistration(formData).then(function(response){
-      if(response){
+      if(response.data){
         $location.path('/login');
 
       }else {

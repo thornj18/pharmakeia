@@ -52,9 +52,14 @@ module.exports.routes = {
 'POST /pharmacy/create':'PharmacyController.create',
 'POST /pharmacy/login':'PharmacyController.login',
 'POST /pharmacy/search':'PharmacyController.search',
+'POST /order/create':'OrderController.create',
 // 'POST /drug/create':'DrugController.create',
 'GET /device':'DeviceController.get',
 'GET /user':'UserController.get',
+'GET /drug/search':'DrugController.search',
 'GET /logout/:access_token':'UserController.logout',
-'GET /pharmacy':'PharmacyController.get'
+'GET /pharmacy':'PharmacyController.get',
+'GET /order/getOrders':'OrderController.getOrders',
+'GET /pharmacy/locate':'PharmacyController.getNearPharmacies'
+
 };

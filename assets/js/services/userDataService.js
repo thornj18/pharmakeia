@@ -3,7 +3,7 @@ App.service('userDataService', function($http, $q) {
   return {
     'doRegistration': function(data) {
       var defer = $q.defer();
-      $http.post('/register', data).then(function success(resp){
+      $http.post('/user/register', data).then(function success(resp){
         defer.resolve(resp.data);
       }, function error(resp) {
         defer.reject(resp);

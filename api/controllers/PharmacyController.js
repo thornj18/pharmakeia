@@ -9,7 +9,6 @@ var async = require('async');
  * @help        :: See http://sailsjs.org/#!/documentation/concepts/Controllers
  */
 
-var pharmacyArray = new Array();
 
 function locate(pharmacy, myLocation, callback) {
   var latitude = pharmacy.latitude;
@@ -17,11 +16,10 @@ function locate(pharmacy, myLocation, callback) {
 
   var pharmLocation = latitude + "," + longitude;
 
-
   distance.get({
     index: 1,
-    origin: '-6.791342,39.067878',
-    destination: '-6.816247,39.289503'
+    origin: myLocation,
+    destination: pharmLocation
   }, function (err, data) {
     if (err)
       console.log(err);
@@ -255,6 +253,7 @@ module.exports = {
 
                 var latitude = req.param('latitude');
                 var longitude = req.param('longitude');
+                var pharmacyArray = new Array();
 
                 var origin = latitude + "," + longitude;
 
@@ -271,7 +270,7 @@ module.exports = {
                       locate(pharmacy, origin, function(data){
                         
                         if(data){
-                          var obj = {name:data.pharmacy.name, email:data.pharmacy.email, location:data.pharmacy.location, phone:data.pharmacy.phone, latitude:data.pharmacy.latitude, longitude:data.pharmacy.longitude, date:data.pharmacy.created, id:data.pharmacy.id, distance:data.distance};
+                          var obj = {name:data.pharmacy.name, email:data.pharmacy.email, location:data.pharmacy.location, phone:data.pharmacy.phone, latitude:data.pharmacy.latitude, longitude:data.pharmacy.longitude, date:data.pharmacy.created,opening_hours:data.pharmacy.opening_hours,closing_hours:data.pharmacy.closing_hours, id:data.pharmacy.id, distance:data.distance};
                           pharmacyArray.push(obj);
                           callback();
                         }
@@ -282,6 +281,7 @@ module.exports = {
                         console.log(err);
                       }else{
                         pharmacyArray.sort(compare);
+                        console.log(pharmacyArray);
                         res.send(pharmacyArray);
                       }
                     });
