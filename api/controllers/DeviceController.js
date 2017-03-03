@@ -11,7 +11,7 @@ module.exports = {
 		if(req.params.all('imei')){
 			Device.create({imei:req.param('imei')}).exec(function(err,created){
 				if (created) {
-					res.send(created);
+					res.send({"created":created});
 				}
 			});
 
