@@ -7,31 +7,53 @@
 
 module.exports = {
 
-	create:function(req, res){
-		if(req.params.all('imei')){
-			Device.create({imei:req.param('imei')}).exec(function(err,created){
-				if (created) {
-					res.send({"created":created});
-				}
-			});
+  create: function (req, res) {
+    if (req.params.all('imei')) {
+      Device.findOne({
+        imei: req.param('imei')
+      }).exec(function (err, device) {
 
-		}else {
-			res.forbidden({'forbidden':'Access Denied'});
+		  if(err){
+			  res.send({"error":err});
+		  }
+        if (!device) {
+          Device.create({
+            imei: req.param('imei')
+          }).exec(function (err, created) {
+            if (created) {
+              res.send({
+                "created": created
+              });
+            }
+          });
+        }else{
+			res.send({"created":device});
 		}
+      })
 
-	},
-	get:function(req,res) {
-		if (req.params.all('imei')) {
-			Device.findOne({imei:req.param('imei')}).exec(function(err,device){
-				if (device) {
-					res.send(device);
-				}else{
-					res.send(404);
-				}
-			});
-		}else {
-			res.forbidden({'forbidden':'Access Denied'});
-		}
-	}
+
+    } else {
+      res.forbidden({
+        'forbidden': 'Access Denied'
+      });
+    }
+
+  },
+  get: function (req, res) {
+    if (req.params.all('imei')) {
+      Device.findOne({
+        imei: req.param('imei')
+      }).exec(function (err, device) {
+        if (device) {
+          res.send(device);
+        } else {
+          res.send(404);
+        }
+      });
+    } else {
+      res.forbidden({
+        'forbidden': 'Access Denied'
+      });
+    }
+  }
 };
-

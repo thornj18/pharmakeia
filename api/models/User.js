@@ -81,6 +81,8 @@ beforeCreate: function(user, cb) {
             User.update({id:user.id},{role:role}).exec(function(error,updated){
               if (error) {
                 return error;
+              }else{
+                return updated;
               }
               return next;
             });
