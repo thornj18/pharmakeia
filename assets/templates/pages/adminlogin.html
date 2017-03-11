@@ -1,0 +1,11 @@
+<div class="login-page" ng-Controller="UserCtrl">
+    <div class="notify" ng-show="message">
+      {{message}}
+    </div>
+  <div class="form margin" ng-submit="login()">
+      <input type="text" ng-model="phone" placeholder="Phone"/>
+      <input type="password" ng-model="password" placeholder="password" />
+      <button  ng-Click=login()>login</button>
+    </form>
+  </div>
+</div>

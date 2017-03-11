@@ -6,16 +6,18 @@
  */
 
 function reg(formData, callback) {
-  console.log(formData);
+  // console.log(formData);
   find(formData.brand_name, function (err, drug) {
     if (err) {
       //TODO: Handle error
     }
 
-    if (found) {
-      drug.owners.add(formData.owners);
-      drug.save(function (err) {});
-      callback({'message':drug});
+    if (drug.drugs) {
+      drug.drugs.owners.add(formData.owners);
+      drug.drugs.save(function (err) {});
+      callback({
+        'message': drug
+      });
     } else {
       Drug.create(formData).exec(function (err, created) {
         if (err) {
@@ -38,9 +40,9 @@ function reg(formData, callback) {
 
 function find(query, callback) {
   Drug.find({
-    brand_name: query
+    brand_name: {contains: query}
   }, {
-    generic_name: query
+    generic_name: {contains :query}
   }).populate('owners').exec(function (err, drugs) {
     if (err) {
       callback({
@@ -67,12 +69,12 @@ module.exports = {
           var formData = req.params.all();
           Pharmacy.findOne({
             email: email
-          }).exec(function (err, pharmacy) {
+          }).exec(function (err, Pharmacy) {
             if (err) {
               //TODO: Handle errors!
             }
 
-            if (pharmacy) {
+            if (Pharmacy) {
               var form = {
                 brand_name: formData.brand_name,
                 generic_name: formData.generic_name,
@@ -82,7 +84,7 @@ module.exports = {
                 caution: formData.caution,
                 prescription: formData.prescription,
                 price: formData.price,
-                owners: pharmacy.id
+                owners: Pharmacy.id
               };
 
               reg(form, function (data) {
@@ -109,10 +111,10 @@ module.exports = {
         }
 
 
-      } else if (req.session.pharmacy.access_token === req.param("access_token")) {
+      } else if (req.session.Pharmacy.access_token === req.param("access_token")) {
         var role = req.session.Pharmacy.role;
-        var pharmacy = req.session.pharmacy;
-        if (role.name === "pharmacy-admin") {
+        var Pharmacy = req.session.Pharmacy;
+        if (role.name === "Pharmacy-admin") {
           var formData = req.params.all();
 
           var form = {
@@ -124,11 +126,11 @@ module.exports = {
             caution: formData.caution,
             prescription: formData.prescription,
             price: formData.price,
-            owners: pharmacy.id
+            owners: Pharmacy.id
           };
 
 
-          //Add pharmacy object into query
+          //Add Pharmacy object into query
           reg(form, function (data) {
             if (data) {
               res.send(data);
@@ -150,8 +152,8 @@ module.exports = {
 
 
   search: function (req, res) {
-    if (req.session.user && req.param("access_token") || req.session.pharmacy && req.param("access_token")) {
-      if (req.session.user.access_token === req.param("access_token") || req.session.pharmacy.access_token === req.param("access_token")) {
+    if (req.session.user && req.param("access_token") || req.session.Pharmacy && req.param("access_token")) {
+      if (req.session.user.access_token === req.param("access_token") || req.session.Pharmacy.access_token === req.param("access_token")) {
         find(req.param('query'), function (data) {
           if (data) {
             res.send(data);
@@ -204,6 +206,8 @@ module.exports = {
 
   list: function (req, res) {
     if (req.session.user && req.param("access_token")) {
+      console.log(req.session.user);
+
       if (req.session.user.access_token === req.param("access_token")) {
         var role = req.session.user.role;
         if (role.name === "admin") {
@@ -223,6 +227,38 @@ module.exports = {
 
 
       }
+    } else if (req.session.Pharmacy && req.param("access_token")) {
+      if (req.session.Pharmacy.access_token === req.param("access_token")) {
+        var role = req.session.Pharmacy.role;
+        if (role.name === "pharmacy-admin") {
+          drugpharmacy.find({
+            pharmacy: req.session.Pharmacy.id
+          }).populate('drug').exec(function (err, drugs) {
+            if (err) {
+              //TODO: Handle Error
+            }
+
+            if (drugs) {
+              var formattedDrugs = new Array();
+              drugs.forEach(function(data){
+                formattedDrugs.push(data.drug);
+              });
+              console.log(formattedDrugs);
+              res.send(formattedDrugs);
+            }
+          });
+        } else {
+
+          res.forbidden({
+            'forbidden': 'Access Denied'
+          });
+
+        }
+
+
+      }
+
+
     } else {
       res.forbidden({
         'forbidden': 'Access Denied'

@@ -1,0 +1,31 @@
+<div class="titlebox pad" >
+  <div class="row">
+    <div class="col-md-8">
+      <h1>ORDERS</h1>
+    </div>
+      <div class="col-md-4">
+        
+      </div>
+  </div>
+</div>
+<div class="table pad">
+  <table class="table table-striped">
+  <thead>
+  <tr>
+  <th class="text-left">ID </th>
+  <th class="text-left">Date</th>
+  <th class="text-left">User</th>
+  <th class="text-left">Pharmacy</th>
+  </tr>
+  </thead>
+  <tbody class="table-hover"  ng-Controller="OrderCtrl">
+  <tr ng-repeat="pharmacy in pharmacies">
+  <td class="text-left">{{order.id}}</td>
+  <td class="text-left">{{order.date}}</td>
+  <td class="text-left">{{order.user.name}}</td>
+  <td class="text-left">{{order.pharmacy.name}}</td> 
+   </tr>
+  </tbody>
+  </table>
+  
+</div>

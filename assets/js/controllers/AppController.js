@@ -27,11 +27,14 @@ App.controller('AppCtrl', function ($scope, $location) {
                 case 'newdrug':
                     $location.path('/drug/new');
                     break
-                case 'play':
-                  $location.path('/playboard/play');
+                case 'pharmacyoverview':
+                  $location.path('/pharmacydashboard');
                   break;
-                case 'mygames':
-                  $location.path('/playboard/mygames');
+                case 'pharmacydrugs':
+                  $location.path('/pharmacydashboard/drugs');
+                  break;
+                case 'pharmacyorders':
+                  $location.path('/pharmacydashboard/orders');
                   break;
                 deafult:
                     $location.path('/dashboard');

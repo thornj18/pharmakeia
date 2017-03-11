@@ -32,7 +32,7 @@ App.service('userDataService', function($http, $q) {
     },
     'getUser': function(access_token) {
       var defer = $q.defer();
-      $http.get('/user/?access_token='+access_token).then(function success(resp){
+      $http.get('/user/get/?access_token='+access_token).then(function success(resp){
         defer.resolve(resp);
       }, function error(resp) {
         defer.resolve(resp);

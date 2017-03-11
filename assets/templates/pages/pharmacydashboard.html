@@ -11,23 +11,21 @@
           </div>
           <div class="navigation">
             <ul class="nav nav-pills nav-stacked">
-              <li><a href="" ng-click=menu("overview")>Overview</a></li>
-              <li><a href="" ng-click=menu("mygames")>My Games</a></li>
-              <li><a href="" ng-click=menu("messeges")>Notifications</a></li>
-              <li><a href="" ng-click=menu("buy")>Buy Tokens</a></li>
-              <li><a href="" ng-click=menu("profile")>My Profile</a></li>
+              <li><a href="" ng-click=menu("pharmacyoverview")>OVERVIEW</a></li>
+              <li><a href="" ng-click=menu("pharmacydrugs")>DRUGS MANAGEMENT</a></li>
+              <li><a href="" ng-click=menu("pharmacyorders")>ORDERS MANAGEMENT</a></li>
             </ul>
           </div>
         </div>
       </div>
       <div class="col-md-9 cont">
-        <div class="header pad" ng-Controller="OnLoadCtrl">
+        <div class="header pad" ng-Controller="PharmacyLoadCtrl">
 
-          <div class="welcome col-md-8">
-            <h3>Welcome, {{user.name}}</h3>
+          <div class="welcome col-md-8" >
+            <h3>Welcome, {{pharmacy.name}}</h3>
           </div>
-          <div class="welcome col-md-4">
-            <button class="flat logout pull-right" ng-click=menu("logout")>LOGOUT</button>
+          <div class="welcome col-md-4" ng-Controller="PharmacyCtrl">
+            <button class="flat logout pull-right" ng-click=logout()>LOGOUT</button>
           </div>
         </div>
         <div class="ui-view content">

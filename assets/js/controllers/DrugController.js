@@ -4,6 +4,7 @@ App.controller('DrugCtrl', function ($scope, $log, $location, drugDataService, $
 
     var access_token = $cookies.get('session_token');
     drugDataService.listDrugs(access_token).then(function(response,error){
+      console.log(response);
       if(response.forbidden){
         $location.path('/login');
       }else if(response.data){
@@ -38,35 +39,6 @@ App.controller('DrugCtrl', function ($scope, $log, $location, drugDataService, $
          }
        });
   }
-
-
-  // $scope.check = function(checked, id) {
-  //   var data = {'id':id}
-  //   console.log(checked);
-  //   if(checked===1){
-  //     gameDataService.createGameinstance(data).then(function(response){
-  //       if(response){
-  //         console.log(response);
-  //       }else {
-  //         console.log("ERROR");
-  //       }
-
-  //     });
-
-  //   }else if(checked===0){
-  //     //Stop Game instance
-  //     gameDataService.stopGameinstance(data).then(function(response){
-  //       if(response){
-  //         console.log(response);
-  //       }else {
-  //         console.log("ERROR");
-  //       }
-  //     });
-
-
-  //   }
-
-  // }
 
 });
 

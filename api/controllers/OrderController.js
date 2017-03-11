@@ -157,9 +157,9 @@ module.exports = {
       }
 
       //To be viewed by pharmacy admin
-    } else if (req.session.pharmacy.access_token === req.param("access_token")) {
+    } else if (req.session.Pharmacy.access_token === req.param("access_token")) {
       var role = req.session.Pharmacy.role;
-      var pharmacy = req.session.pharmacy;
+      var pharmacy = req.session.Pharmacy;
       if (role.name === "pharmacy-admin") {
         Order.find({
           from_pharmacy: pharmacy.id

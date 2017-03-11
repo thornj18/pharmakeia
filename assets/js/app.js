@@ -15,13 +15,17 @@ App.config(function($stateProvider, $urlRouterProvider) {
       url:'/404',
       templateUrl:'templates/pages/404.html'
     })
-    .state('login',{
-      url:'/login',
-      templateUrl:'templates/pages/login.html'
+    .state('adminlogin',{
+      url:'/adminlogin',
+      templateUrl:'templates/pages/adminlogin.html'
     })
-    .state('register',{
-      url:'/register',
-      templateUrl:'templates/pages/register.html'
+    .state('pharmacylogin',{
+      url:'/pharmacylogin',
+      templateUrl:'templates/pages/pharmacylogin.html'
+    })
+    .state('pharmacyregister',{
+      url:'/pharmacyregister',
+      templateUrl:'templates/pages/pharmacyregister.html'
     })
     .state('dashboard',{
       templateUrl:'templates/pages/dashboard.html'
@@ -62,20 +66,25 @@ App.config(function($stateProvider, $urlRouterProvider) {
       url:'/drug/new',
       templateUrl:'templates/pages/dashboard.drug.new.html'
     })
-    .state('playboard',{
-      templateUrl:'templates/pages/playboard.html'
+    .state('pharmacydashboard',{
+
+      templateUrl:'templates/pages/pharmacydashboard.html'
     })
-    .state('playboard.overview',{
-      url:'/playboard',
-      templateUrl:'templates/pages/playboard.overview.html'
+    .state('pharmacydashboard.overview',{
+      url:'/pharmacydashboard',
+      templateUrl:'templates/pages/pharmacydashboard.overview.html'
     })
-    .state('playboard.play',{
-      url:'/playboard/play/:id',
-      templateUrl:'templates/pages/playboard.play.html'
+    .state('pharmacydashboard.drugs',{
+      url:'/pharmacydashboard/drugs',
+      templateUrl:'templates/pages/pharmacydashboard.drugs.html'
     })
-    .state('playboard.mygames',{
-      url:'/playboard/mygames',
-      templateUrl:'templates/pages/playboard.mygames.html'
+    .state('pharmacydashboard.orders',{
+      url:'/pharmacydashboard/orders',
+      templateUrl:'templates/pages/pharmacydashboard.orders.html'
+    })
+    .state('pharmacydashboard.newdrug',{
+      url:'/pharmacydashboard/drug/new',
+      templateUrl:'templates/pages/pharmacydashboard.drug.new.html'
     });
 
 });

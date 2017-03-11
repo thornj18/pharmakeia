@@ -53,7 +53,6 @@ module.exports.routes = {
 'POST /pharmacy/login':'PharmacyController.login',
 'POST /pharmacy/search':'PharmacyController.search',
 'POST /order/create':'OrderController.create',
-// 'POST /drug/create':'DrugController.create',
 'GET /device':'DeviceController.get',
 'GET /user':'UserController.get',
 'GET /drug/search':'DrugController.search',

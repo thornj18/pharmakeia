@@ -117,12 +117,10 @@ module.exports = {
       email: formData.email
     }).exec(function (err, Pharamcy) {
       if (Pharamcy) {
-        // console.log("Pharmacy found!");
         res.send({
           'message': 'Pharmacy already exists'
         });
       } else {
-        // console.log("create Pharmacy");
         Pharmacy.create(formData).exec(function (err, created) {
           if (created) {
             var pharmacy_created = {
@@ -163,6 +161,21 @@ module.exports = {
 
     });
   },
+
+//logout pharmacy
+  logout: function(req, res) {
+     if(req.session.Pharmacy&&req.param("access_token")){
+        if (req.session.Pharmacy.access_token === req.param("access_token")) {
+          req.session.destroy(function(error){
+            if (!error) {
+              res.send({'logout':'User has been logged out'});
+            }
+          });
+        }
+      }else{
+        res.forbidden({'forbidden':'Access Denied'});
+      }
+    },
 
   //Gets the logged in pharmacy 
 
@@ -281,7 +294,6 @@ module.exports = {
                         console.log(err);
                       }else{
                         pharmacyArray.sort(compare);
-                        console.log(pharmacyArray);
                         res.send(pharmacyArray);
                       }
                     });

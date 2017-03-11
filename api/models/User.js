@@ -56,7 +56,7 @@ module.exports = {
   },
 
 
-beforeCreate: function(user, cb) {
+ beforeCreate: function(user, cb) {
         bcrypt.genSalt(10, function(err, salt) {
             bcrypt.hash(user.password, salt, function(err, hash) {
                 if (err) {
@@ -70,25 +70,19 @@ beforeCreate: function(user, cb) {
         });
     },
 
-    
     afterCreate: function(user, next){
         Role.findOrCreate({name:'subscriber'},{name:'subscriber'}).exec(function(error, role){
           if (error) {
-              
             return error;
           }
           if(role){
             User.update({id:user.id},{role:role}).exec(function(error,updated){
               if (error) {
                 return error;
-              }else{
-                return updated;
               }
               return next;
             });
           }
         });
     }
-
-    
 };

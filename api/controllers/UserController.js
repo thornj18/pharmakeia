@@ -7,36 +7,25 @@ var randtoken = require('rand-token');
  * @help        :: See http://sailsjs.org/#!/documentation/concepts/Controllers
  */
 
-function auth(phone, password, callback) {
-  if (phone && password) {
-    User.findOne({
-      phone: phone
-    }).exec(function (err, user) {
+function auth(phone,password, callback){
+  if(phone && password){
+    User.findOne({phone:phone}).exec(function(err, user){
       if (err) {
-        callback({
-          'message': err
-        });
+        callback({'message': err});
       } else {
         if (!user || typeof user === 'undefined') {
-          callback({
-            'message': 'Could not find User, sorry.'
-          });
-        } else {
+          callback({'message': 'Could not find User, sorry.'});
+        }else{
           bcrypt.compare(password, user.password, function (err, realuser) {
-            if (!realuser) {
-              callback({
-                'message': 'Invalid Password'
-              });
-            } else {
+            if (!realuser){
+              callback({'message': 'Invalid Password'});
+            }else{
               var token = randtoken.generate(16);
               user.access_token = token;
               user.save();
 
-
-              Role.findOne({
-                id: user.role
-              }).exec(function (err, role) {
-                if (role) {
+              Role.findOne({id:user.role}).exec(function(err, role){
+                if(role){
                   var returnUser = {
                     name: user.name,
                     email: user.email,
@@ -46,13 +35,9 @@ function auth(phone, password, callback) {
                     role: role,
                     access_token: user.access_token
                   };
-                  callback({
-                    'user': returnUser
-                  });
-                } else {
-                  callback({
-                    'error': 'no role'
-                  });
+                  callback({'user': returnUser});
+                }else{
+                  callback({'error': 'no role'});
                 }
 
               });
@@ -61,75 +46,60 @@ function auth(phone, password, callback) {
         }
       }
     });
-  } else {
-    callback({
-      'message': 'Please fill all fields'
-    });
+  }else{
+    callback({'message': 'Please fill all fields'});
   }
 }
 
 module.exports = {
   getUser: function (req, res) {
-    console.log(req.session.user);
-    if (req.session.user && req.param("access_token") && req.param("phone")) {
-      //for Web apps
-      if (req.session.user.access_token === req.param("access_token")) {
-        User.findOne({
-          phone: req.param("phone")
-        }).exec(function (error, user) {
-          if (user) {
-            var foundUser = {
-              name: user.name,
-              email: user.email,
-              id: user.id,
-              phone: user.phone
-            };
-            res.send(foundUser);
-          } else {
-            res.send("No user");
-          }
-        });
-      }
-    } else if (req.param("imei") && req.param("access_token") && req.param("phone")) {
-      //for Mobile apps
-      User.findOne({
-        access_token: req.param("access_token")
-      }).exec(function (err, user) {
+    if (req.param("imei")&&req.param("access_token")&&req.param("phone")) {
+      User.findOne({access_token:req.param("access_token")}).exec(function(err, user){
         if (user) {
           var owner = user.id;
-          Device.findOne({
-            imei: req.param("imei")
-          }).exec(function (err, device) {
+          Device.findOne({imei:req.param("imei")}).exec(function(err, device){
             if (err) {
-              res.send({
-                'error': err
-              })
+              //TODO: Handle the error from this query
             }
             if (device) {
               if (device.owner === owner) {
-                var foundUser = {
-                  name: user.name,
-                  email: user.email,
-                  id: user.id,
-                  phone: user.phone
-                };
-                res.send(foundUser);
-              } else {
-                res.forbidden({
-                  'forbidden': 'Access Denied'
+                User.findOne({phone:req.param("phone")}).exec(function(error, foundUser){
+                  if (error) {
+                    //TODO: Handle the error from this query
+                    res.send(error);
+                  }
+                  if (foundUser) {
+                    var gotUser = {name:foundUser.name, email:foundUser.email, id:foundUser.id, phone:foundUser.phone};
+                    res.send(gotUser);
+                  }
                 });
+              }else{
+                res.forbidden({'forbidden':'Access Denied'});
               }
             }
           });
-        } else {
-          res.forbidden({
-            'forbidden': 'Access Denied'
-          });
+        }else {
+          res.forbidden({'forbidden':'Access Denied'});
         }
       });
-    } else {
-      res.send("Access token does not match");
+    }else if (req.session.user&&req.param("access_token")&&req.param("phone")) {
+      if (req.session.user.access_token === req.param("access_token")) {
+        User.findOne({phone:req.param("phone")}).exec(function(error, user){
+          if (error) {
+            //TODO: Handle the error from this query
+          }
+          if (user) {
+            var foundUser = {name:user.name, email:user.email, id:user.id, phone:user.phone};
+            res.send(foundUser);
+          }
+        });
+      }else{
+        res.send("Access token does not match");
+      }
+    }else{
+      res.send("Not enough params");
     }
+
   },
 
   get: function (req, res) {
@@ -203,23 +173,38 @@ module.exports = {
     }
 
   },
-  logout: function (req, res) {
-    if (req.session.user && req.param("access_token")) {
-      if (req.session.user.access_token === req.param("access_token")) {
-        req.session.destroy(function (error) {
-          if (!error) {
-            res.send({
-              'logout': 'User has been logged out'
+
+  logout: function(req, res) {
+      if (req.param("imei")&&req.param("access_token")) {
+        User.findOne({access_token:access_token}).exec(function(err, user){
+          if (user) {
+            Device.findOne({imei:"imei"}).exec(function(err, device){
+              if (device) {
+                device.owner.remove();
+                user.access_token.remove();
+                res.send({'logout':'User has been logged out'});
+              }else{
+                res.forbidden("Access Denied");
+              }
             });
+          }else {
+            res.send("User must be logged in to perform this");
           }
-        })
+        });
+      }else if(req.session.user&&req.param("access_token")){
+        if (req.session.user.access_token === req.param("access_token")) {
+          console.log(req.session.user.access_token);
+          console.log(req.param("access_token"));
+          req.session.destroy(function(error){
+            if (!error) {
+              res.send({'logout':'User has been logged out'});
+            }
+          });
+        }
+      }else{
+        res.forbidden({'forbidden':'Access Denied'});
       }
-    } else {
-      res.forbidden({
-        'forbidden': 'Access Denied'
-      });
-    }
-  },
+    },
 
   create: function (req, res) {
     var formdata = req.params.all();

@@ -1,0 +1,31 @@
+<div class="titlebox pad" >
+  <div class="row">
+    <div class="col-md-8">
+      <h1>DRUGS MANAGEMENT</h1>
+    </div>
+      <div class="col-md-4">
+        <button class="flat pull-right" ng-click=menu("newdrug")>CREATE NEW</button>
+      </div>
+  </div>
+</div>
+<div class="table pad">
+  <table class="table table-striped">
+  <thead>
+  <tr>
+  <th class="text-left">Brand Name </th>
+  <th class="text-left">Generic Name</th>
+  <th class="text-left">Prescription</th>
+  <th class="text-left">Price</th>
+  </tr>
+  </thead>
+  <tbody class="table-hover"  ng-Controller="DrugCtrl">
+  <tr ng-repeat="drug in drugs">
+  <td class="text-left">{{drug.brand_name}}</td>
+  <td class="text-left">{{drug.generic_name}}</td>
+  <td class="text-left">{{drug.prescription}}</td>
+  <td class="text-left">{{drug.price}}</td> 
+   </tr>
+  </tbody>
+  </table>
+  
+</div>
