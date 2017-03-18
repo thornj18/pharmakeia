@@ -302,23 +302,30 @@ module.exports = {
                 });
 
               } else {
+                console.log("error 1");
                 res.forbidden({
                   'forbidden': 'Access Denied'
                 });
               }
             } else {
+                              console.log("error 2");
+
               res.forbidden({
                 'forbidden': 'Access Denied'
               });
             }
           });
         } else {
+                          console.log("error 3");
+
           res.forbidden({
             'forbidden': 'Access Denied'
           });
         }
       });
     } else {
+                      console.log("error 4");
+
       res.forbidden({
         'forbidden': 'Access Denied'
       });

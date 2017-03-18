@@ -89,6 +89,7 @@ module.exports = {
   },
 
   getOrders: function (req, res) {
+          console.log(req.params.all());
     //TODO: Figure out how to implement this function for both user and pharmacy
     if (req.param("imei") && req.param("access_token")) {
       //for Mobile apps
@@ -134,6 +135,7 @@ module.exports = {
       });
       //To be viewed by admin
     } else if (req.session.user && req.param("access_token")) {
+      // console.log(req.params.all());
       if (req.session.user.access_token === req.param("access_token")) {
         var role = req.session.user.role;
         if (role.name === "admin") {
@@ -158,6 +160,7 @@ module.exports = {
 
       //To be viewed by pharmacy admin
     } else if (req.session.Pharmacy.access_token === req.param("access_token")) {
+            // console.log(req.params.all());
       var role = req.session.Pharmacy.role;
       var pharmacy = req.session.Pharmacy;
       if (role.name === "pharmacy-admin") {
