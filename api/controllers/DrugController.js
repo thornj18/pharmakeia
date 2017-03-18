@@ -5,11 +5,13 @@
  * @help        :: See http://sailsjs.org/#!/documentation/concepts/Controllers
  */
 
+// var Pharmacy 
+
 function reg(formData, callback) {
   // console.log(formData);
-  find(formData.brand_name, function (err, drug) {
-    if (err) {
-      //TODO: Handle error
+  find(formData.brand_name, function (drug) {
+    if (drug.error) {
+      callback({'message': drug});
     }
 
     if (drug.drugs) {
@@ -45,6 +47,7 @@ function find(query, callback) {
     generic_name: {contains :query}
   }).populate('owners').exec(function (err, drugs) {
     if (err) {
+      console.log(err);
       callback({
         'error': err
       });
@@ -58,6 +61,8 @@ function find(query, callback) {
   });
 }
 
+
+
 module.exports = {
 
   create: function (req, res) {
@@ -67,7 +72,7 @@ module.exports = {
         if (role.name === "admin") {
           var email = req.param('email');
           var formData = req.params.all();
-          Pharmacy.findOne({
+         sails.models['pharmacy'].findOne({
             email: email
           }).exec(function (err, Pharmacy) {
             if (err) {
@@ -114,7 +119,7 @@ module.exports = {
       } else if (req.session.Pharmacy.access_token === req.param("access_token")) {
         var role = req.session.Pharmacy.role;
         var Pharmacy = req.session.Pharmacy;
-        if (role.name === "Pharmacy-admin") {
+        if (role.name === "pharmacy-admin") {
           var formData = req.params.all();
 
           var form = {

@@ -193,8 +193,6 @@ module.exports = {
         });
       }else if(req.session.user&&req.param("access_token")){
         if (req.session.user.access_token === req.param("access_token")) {
-          console.log(req.session.user.access_token);
-          console.log(req.param("access_token"));
           req.session.destroy(function(error){
             if (!error) {
               res.send({'logout':'User has been logged out'});
@@ -208,7 +206,6 @@ module.exports = {
 
   create: function (req, res) {
     var formdata = req.params.all();
-    console.log(formdata);
 
     User.findOrCreate({
       phone: formdata.phone
